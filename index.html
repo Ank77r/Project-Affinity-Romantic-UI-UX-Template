@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoveOS - Valentine's Day UI Template</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Dancing+Script:wght@700&family=Indie+Flower&family=Press+Start+2P&family=VT323&family=Cormorant+Garamond:ital,wght@1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-dreaming-big-31.mp3" type="audio/mp3">
+    </audio>
+    <audio id="sfx-pop" src="https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-click-1112.mp3"></audio>
+    <audio id="sfx-win" src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3"></audio>
+    <audio id="sfx-buzz" src="https://assets.mixkit.co/sfx/preview/mixkit-game-show-wrong-answer-buzz-950.mp3"></audio>
+    <audio id="sfx-type" src="https://assets.mixkit.co/sfx/preview/mixkit-keyboard-typing-1386.mp3"></audio>
+    <audio id="sfx-heartbeat" loop src="https://assets.mixkit.co/sfx/preview/mixkit-human-heartbeat-slow-491.mp3"></audio>
+
+    <div id="boot-screen">
+        <div class="heart-pulse"><i class="fas fa-heart"></i></div>
+        <div class="loading-bar"><div class="loading-progress"></div></div>
+        <div class="boot-text">Loading Your World...</div>
+    </div>
+
+    <div id="login-screen">
+        <div id="login-bg-image"></div>
+        <div class="login-card" id="tilt-card">
+            <div class="user-avatar-container">
+                <div class="pulse-ring"></div>
+                <div class="pulse-ring"></div>
+                <div class="user-avatar"><img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=200&auto=format&fit=crop" alt="User Avatar"></div>
+            </div>
+            <h1 class="login-title">Hello, Valentine</h1>
+            <p class="login-sub">Enter Your Password...Just kidding.<br>Welcome to LoveOS 8.0</p>
+            <button class="login-btn" onclick="startOS()"><i class="fas fa-heart" style="font-size: 0.9em;"></i> Enter Our World</button>
+        </div>
+    </div>
+
+    <div id="desktop">
+        <div class="cloud" style="top: 10%; width: 300px; height: 100px;"></div>
+        <div class="cloud" style="top: 50%; right: 10%; width: 400px; height: 120px; animation-duration: 80s;"></div>
+
+        <div class="icon-container">
+            <div class="app-icon" onclick="openWindow('win-chat')">
+                <div class="icon-box" style="background: #fab1a0;"><i class="fas fa-comments"></i></div>
+                <span class="icon-label">CupidTalk</span>
+            </div>
+            <div class="app-icon" onclick="openWindow('win-gallery')">
+                <div class="icon-box" style="background: #74b9ff;"><i class="fas fa-images"></i></div>
+                <span class="icon-label">Memories</span>
+            </div>
+            <div class="app-icon" onclick="openWindow('win-map')">
+                <div class="icon-box" style="background: #a29bfe;"><i class="fas fa-map-marker-alt"></i></div>
+                <span class="icon-label">Our Spot</span>
+            </div>
+            <div class="app-icon" onclick="openWindow('win-notes')">
+                <div class="icon-box" style="background: #ffeaa7;"><i class="fas fa-sticky-note"></i></div>
+                <span class="icon-label">Love Note</span>
+            </div>
+            <div class="app-icon" onclick="openWindow('win-game')">
+                <div class="icon-box" style="background: #fd79a8;"><i class="fas fa-gamepad"></i></div>
+                <span class="icon-label">Heart Catcher</span>
+            </div>
+            <div class="app-icon" onclick="openWindow('win-calc')">
+                <div class="icon-box" style="background: #55efc4;"><i class="fas fa-calculator"></i></div>
+                <span class="icon-label">Love Calc</span>
+            </div>
+            <div class="app-icon" onclick="triggerProposal()">
+                <div class="icon-box" style="background: #ff7675; animation: beat 2s infinite;"><i class="fas fa-heart"></i></div>
+                <span class="icon-label">Special.exe</span>
+            </div>
+        </div>
+
+        <div id="taskbar">
+            <div class="task-icon start-btn" onclick="triggerProposal()"><i class="fas fa-heart"></i></div>
+            <div class="task-icon" onclick="openWindow('win-chat')"><i class="fas fa-comments" style="color: #fab1a0;"></i></div>
+            <div class="task-icon" onclick="openWindow('win-gallery')"><i class="fas fa-images" style="color: #74b9ff;"></i></div>
+            <div class="task-icon" onclick="openWindow('win-music')"><i class="fas fa-music" style="color: #a29bfe;"></i></div>
+            <div class="task-icon" onclick="openWindow('win-game')"><i class="fas fa-gamepad" style="color: #fd79a8;"></i></div>
+            <div class="time-capsule">
+                <div style="font-weight: 700; text-transform: uppercase; font-size: 0.7rem;">Together For</div>
+                <div id="time-counter">Calculating...</div>
+            </div>
+        </div>
+
+        <div id="win-chat" class="window" style="width: 380px; height: 550px; top: 50px; left: 300px;">
+            <div class="win-header" style="background: rgba(255,255,255,0.8);">
+                <div class="win-controls"><div class="control-dot dot-red" onclick="closeWindow('win-chat')"></div><div class="control-dot dot-yellow"></div></div>
+                <div style="display: flex; flex-direction: column; line-height: 1.1;">
+                    <span class="win-title" style="margin:0;">❤️ My Valentine</span>
+                    <span style="font-size: 0.7rem; color: #27c93f; font-weight: 500;">● Online</span>
+                </div>
+            </div>
+            <div class="win-body">
+                <div class="chat-area" id="chat-box"></div>
+                <div class="chat-input-bar">
+                    <i class="fas fa-plus-circle" style="color: #ccc;"></i>
+                    <div class="fake-input">Type a message...</div>
+                    <i class="fas fa-paper-plane send-btn"></i>
+                </div>
+            </div>
+        </div>
+
+        <div id="win-gallery" class="window" style="width: 600px; height: 450px; top: 100px; left: 450px;">
+            <div class="win-header">
+                <div class="win-controls"><div class="control-dot dot-red" onclick="closeWindow('win-gallery')"></div><div class="control-dot dot-yellow"></div><div class="control-dot dot-green"></div></div>
+                <div class="win-title">✨ Memories (Drag & Click to Flip)</div>
+            </div>
+            <div class="win-body" id="gallery-body"></div>
+        </div>
+
+        <div id="win-map" class="window" style="width: 400px; height: 350px; top: 150px; left: 200px;">
+            <div class="win-header">
+                <div class="win-controls"><div class="control-dot dot-red" onclick="closeWindow('win-map')"></div></div>
+                <div class="win-title">📍 The Day We Met 💝</div>
+            </div>
+            <div class="win-body" style="background: white; padding: 0;">
+                <iframe width="100%" height="100%" frameborder="0" style="border:0" src="https://maps.google.com/maps?q=Microsoft+Corporation+Gurugram+DLF+Cyber+City&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div id="win-notes" class="window" style="width: 380px; height: 450px; top: 80px; left: 600px;">
+            <div class="win-header">
+                <div class="win-controls"><div class="control-dot dot-red" onclick="closeWindow('win-notes')"></div></div>
+                <div class="win-title">My_Diary.txt</div>
+            </div>
+            <div class="win-body">
+                <div class="paper-content"><span id="note-text"></span><span class="typing-cursor"></span></div>
+            </div>
+        </div>
+
+        <div id="win-terminal" class="window" style="width: 500px; height: 350px; top: 150px; left: 350px; display: none; z-index: 10000; border: 1px solid #555; background: #1a1a1a;">
+            <div class="win-header" style="background: #333; color: white;">
+                <div class="win-controls"><div class="control-dot dot-red" onclick="closeWindow('win-terminal')"></div></div>
+                <div class="win-title" style="color:white; font-family:'Share Tech Mono';">❤️ C:\System\Love_Protocol.exe</div>
+            </div>
+            <div class="win-body" id="terminal-body">
+                <div class="terminal-line">System OS [Version 8.0.2026]</div>
+                <div class="terminal-line">(c) Love Corporation. All rights reserved.</div>
+                <br>
+                <div class="terminal-line" style="color: #fab1a0;">Initiating Secret Protocol...</div>
+                <br>
+                <div class="terminal-line">QUESTION: Enter the secret password (hint: it's a pet name)</div>
+                <div class="user-input-line">
+                    <span class="terminal-prompt">root@heart:~$</span>
+                    <input type="text" class="terminal-input" id="nickname-input" autocomplete="off" onkeypress="handleTerminalEnter(event)">
+                </div>
+            </div>
+        </div>
+
+        <div id="win-reveal" class="confirm-overlay" style="z-index: 11000;">
+            <div class="reveal-card">
+                <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem; color: #ff7675; margin-bottom: 10px;">Access Granted! 🔓</h2>
+                <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=400&auto=format&fit=crop" class="hidden-photo" onclick="openFullscreen(this.src)" alt="Hidden Cute Photo">
+                <p style="font-family: 'Indie Flower'; font-size: 1.1rem; color: #555; margin-bottom: 20px;">
+                    "Here is a small gift just for you, to remind you how special you are!" ❤️
+                </p>
+            </div>
+        </div>
+
+        <div id="fullscreen-overlay" onclick="closeFullscreen()">
+            <img id="fullscreen-img" src="">
+            <div class="close-fs">Click anywhere to close</div>
+        </div>
+
+        <div id="win-game" class="window" style="width: 450px; height: 460px; top: 100px; left: 350px;">
+            <div class="win-header">
+                <div class="win-controls"><div class="control-dot dot-red" onclick="closeWindow('win-game')"></div></div>
+                <div class="win-title">Catch My Heart!</div>
+            </div>
+            <div class="win-body" style="padding: 0;">
+                <div class="game-area" id="game-area">
+                    <div class="game-ui"><span>Score: <span id="game-score">0</span>/20</span><span>Time: <span id="game-time">30</span>s</span></div>
+                    
+                    <div class="game-overlay" id="game-start-screen">
+                        <p style="margin-bottom: 10px;"><b>Mission:</b> Catch ❤️ & 💍</p>
+                        <p style="font-size: 0.7rem; color: #ff7675;">⚠️ AVOID RED FLAGS 🚩</p>
+                        <button class="game-btn" onclick="startGame()">START</button>
+                    </div>
+
+                    <div class="game-overlay" id="game-win-screen" style="display:none; background: rgba(255,105,180,0.95);">
+                        <h1>YOU WON! 🏆</h1>
+                        <p style="font-size: 0.9rem;">You caught my heart!</p>
+                        <div id="prize-coupon-container"></div>
+                        
+                        <div style="display: flex; gap: 15px; margin-top: 15px;">
+                            <button class="game-btn" style="background:white; color:#ff69b4; margin-top:5px; font-size:0.7rem;" onclick="startGame()">🔄 Replay</button>
+                            <button class="game-btn" style="background:#ff7675; color:white; animation: pulse 1s infinite; margin-top:5px; font-size:0.7rem;" onclick="triggerSurprise()">🎁 Surprise</button>
+                        </div>
+                    </div>
+
+                    <div class="game-overlay" id="game-lose-screen" style="display:none;">
+                        <h1>GAME OVER 🥺</h1>
+                        <p>You let my heart fall!</p>
+                        <button class="game-btn" onclick="startGame()">TRY AGAIN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="win-calc" class="window" style="width: 380px; height: 500px; top: 100px; left: 500px;">
+            <div class="win-header">
+                <div class="win-controls"><div class="control-dot dot-red" onclick="closeWindow('win-calc')"></div></div>
+                <div class="win-title">Love Compatibility Verifier</div>
+            </div>
+            <div class="win-body">
+                <div class="auth-step active" id="step-1">
+                    <div class="step-header">
+                        <span>1. Visual Verification</span>
+                        <span class="step-status" id="status-1">Pending</span>
+                    </div>
+                    <label for="auth-photo" class="upload-area">
+                        <i class="fas fa-camera" style="font-size: 1.5rem; color: #ccc;"></i>
+                        <p style="margin: 5px 0 0; font-size: 0.8rem; color: #888;">Upload your photo</p>
+                        <img id="photo-preview" class="upload-preview">
+                    </label>
+                    <input type="file" id="auth-photo" accept="image/*" hidden onchange="handlePhotoUpload(this)">
+                </div>
+
+                <div class="auth-step" id="step-2">
+                    <div class="step-header">
+                        <span>2. Voice Authorization</span>
+                        <span class="step-status" id="status-2">Locked</span>
+                    </div>
+                    <div style="text-align: center;">
+                        <p class="cute-sub">Say the magic words 💓</p>
+                        <p style="font-size: 0.8rem; color: #666; margin-bottom: 10px;">Click & Say: <strong>"I Like You"</strong></p>
+                        <button class="mic-btn" id="mic-btn" onclick="startVoiceAuth()"><i class="fas fa-microphone"></i></button>
+                        <div id="voice-msg" style="height: 20px; font-size: 0.75rem; color: #ff7eb3; font-weight: 600; margin-top:5px;"></div>
+                    </div>
+                </div>
+
+                <div class="progress-container" id="calc-result-area">
+                    <h3 style="color: #444; margin: 0 0 10px 0;">Compatibility Analysis</h3>
+                    <div style="width: 100%; height: 20px; background: #eee; border-radius: 10px; overflow: hidden; margin-bottom: 10px;">
+                        <div id="final-progress" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff9a9e, #ff7eb3); transition: width 0.1s;"></div>
+                    </div>
+                    <div class="big-percent" id="final-percent">0%</div>
+                    <p id="final-text" style="font-size: 0.9rem; color: #888;"></p>
+                </div>
+
+                <div id="photo-confirm-overlay" class="confirm-overlay">
+                    <div class="confirm-card">
+                        <div id="confirm-photo-wrap"></div>
+                        <h3 id="confirm-question" style="margin-top:12px; font-size: 1.1rem; line-height: 1.4; color: #444;"></h3>
+                        <div style="margin-top:12px;">
+                            <button class="confirm-btn confirm-yes" onclick="confirmPhotoYes()">Yes, it's perfect! <span class="cute-flair">🥰</span></button>
+                            <button class="confirm-btn confirm-no" onclick="confirmPhotoNo()">No, let me change</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="win-music" class="window" style="width: 250px; height: 120px; bottom: 120px; right: 20px;">
+            <div class="win-header">
+                <div class="win-controls"><div class="control-dot dot-red" onclick="closeWindow('win-music')"></div></div>
+                <div class="win-title">Now Playing</div>
+            </div>
+            <div class="win-body" style="align-items: center; justify-content: center;">
+                <strong>Love Song Vibes</strong>
+                <div style="font-size: 2rem; color: #a29bfe; cursor: pointer; margin-top: 5px;" onclick="toggleMusic()">
+                    <i class="fas fa-pause-circle" id="music-icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="proposal-overlay">
+        <div class="proposal-background"></div>
+        <div id="petal-tunnel"></div>
+        <div id="emotional-typing"></div>
+        
+        <div class="proposal-card-final" id="final-card">
+            <div class="ring-container">
+                <div class="final-ring">❤️</div>
+            </div>
+            <h1 class="final-question">Will You Be My Valentine?</h1>
+            <p class="final-sub">A simple question with a simple answer.</p>
+            <div class="final-btn-group">
+                <button class="final-btn yes-btn" onclick="sayYes()">Yes, of course! 🥺❤️</button>
+                <button class="final-btn yes-btn" onclick="sayYes()">ABSOLUTELY! 😘</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="final-message-overlay">
+        <div class="final-msg-text">Thank You...</div>
+        <div class="final-msg-sub">You've made my day.❤️</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
