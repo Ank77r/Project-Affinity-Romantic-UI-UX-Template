@@ -2,7 +2,7 @@
 
 **LoveOS** is a gamified, Valentine-themed web operating system simulation. This project serves as an interactive UI/UX template and a technical showcase of complex DOM manipulation, emotional design principles, and modern frontend architecture.
 
-![LoveOS Preview](https://via.placeholder.com/800x450.png?text=LoveOS+Desktop+Preview](https://ank77r.github.io/Project-Affinity-Romantic-UI-UX-Template/)](https://ank77r.github.io/Project-Affinity-Romantic-UI-UX-Template) ## 📌 Project Overview
+Project Overview
 The goal of this project was to step away from traditional, static web layouts and create a highly interactive, stateful environment. It simulates a desktop OS right in the browser, complete with draggable windows, interactive applications, and a gamified user journey. 
 
 This template is perfect for developers or designers looking to showcase emotional design—using micro-interactions, animations, and narrative to create a memorable user experience.
